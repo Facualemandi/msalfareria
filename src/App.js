@@ -1,12 +1,16 @@
 import { Route, Routes } from "react-router-dom";
-import Start from "./pages/Start/Start";
+import { ProviderContext } from "./context/contex";
+import Start from "./pages/1-Start/Start";
+import Home from "./pages/2-Home/Home";
 
 function App() {
-
   return (
-     <Routes>
-         <Route path='/' element={<Start/>} />
-     </Routes>
+    <ProviderContext>
+      <Routes>
+        <Route path="/" element={<Start />} />
+        <Route path="/home" element={<Home/>} />
+      </Routes>
+    </ProviderContext>
   );
 }
 
