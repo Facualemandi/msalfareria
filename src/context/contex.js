@@ -7,7 +7,14 @@ import {
 } from "firebase/auth";
 
 import { auth, db } from "../firebase";
-import { collection, doc, getDoc, getDocs, setDoc, updateDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
@@ -20,21 +27,21 @@ export const useTheContext = () => {
 };
 
 export function ProviderContext({ children }) {
-  const [uuidUser, setUuidUser] = useState('')
+  const [uuidUser, setUuidUser] = useState("");
   const [products, setProducts] = useState([]);
-  const [viewOneProduct, setViewOneProduct] = useState([])
+  const [viewOneProduct, setViewOneProduct] = useState([]);
   const navigate = useNavigate();
   const [userAutentication, setUserAutentication] = useState(null);
   const [loading, setLoading] = useState(true);
   const [cartUser, setCartUser] = useState([]);
-  const [productsLikes, setProductsLikes] = useState([])
+  const [productsLikes, setProductsLikes] = useState([]);
 
   // Obtenemos los datos de la collección 'AllProducts' y lo guardamos en products
   const dbCollectAllProducts = collection(db, "allProducts");
 
   const getAllProducts = async () => {
     const data = await getDocs(dbCollectAllProducts);
-    console.log('Ejecutado de nuevo')
+    console.log("Ejecutado de nuevo");
     setProducts(
       data.docs.map((product) => ({ ...product.data(), id: product.id }))
     );
@@ -56,8 +63,8 @@ export function ProviderContext({ children }) {
     await createUserWithEmailAndPassword(auth, email, password);
 
     const saveUser = onAuthStateChanged(auth, async (currentUser) => {
-         await addUserToCollect(currentUser.email, currentUser.uid);
-    })
+      await addUserToCollect(currentUser.email, currentUser.uid);
+    });
     saveUser();
   };
 
@@ -69,62 +76,57 @@ export function ProviderContext({ children }) {
 
   //Obtenemos un producto solo para mostar en ViewProduct -- (Revisar)
   const getProduct = async (product) => {
-     localStorage.setItem('alfareriaMsProduct' , JSON.stringify(product))
+    localStorage.setItem("alfareriaMsProduct", JSON.stringify(product));
+  };
 
-  }
-
-// Acá se ejecuta la funcion que obtenemos de register
+  // Acá se ejecuta la funcion que obtenemos de register
   const addUserToCollect = async (email, uid) => {
-      const docRef = doc(db, "Users", uid);
-      const payload = { email, cartUser,productsLikes, uid };
-      await setDoc(docRef, payload);
+    const docRef = doc(db, "Users", uid);
+    const payload = { email, cartUser, productsLikes, uid };
+    await setDoc(docRef, payload);
   };
 
   // Acá creamos una función para agregar productos al carrito del usuario
   const addProduct = async (uuidUser, parseProductStorage) => {
-    const refCollect = collection(db, 'Users');
+    const refCollect = collection(db, "Users");
     const docRef = doc(refCollect, uuidUser);
 
-    const getOneDoc = doc(db, 'Users', uuidUser);
+    const getOneDoc = doc(db, "Users", uuidUser);
     const oneDoc = await getDoc(getOneDoc);
 
     const cartUser = oneDoc.data().cartUser;
-    const findProductInCart = cartUser.find(obj => obj.id === parseProductStorage.id);
+    const findProductInCart = cartUser.find(
+      (obj) => obj.id === parseProductStorage.id
+    );
 
-    if(findProductInCart){
-      console.log('Ya existe')
-    }else{
+    if (findProductInCart) {
+      console.log("Ya existe");
+    } else {
       Swal.fire({
-        position: 'top-end',
-        icon: 'success',
-        title: 'Producto agregado',
+        position: "top-end",
+        icon: "success",
+        title: "Producto agregado",
         showConfirmButton: false,
-        timer: 1500
-      })
-      
-      await updateDoc(docRef, {cartUser: [...cartUser, parseProductStorage]})
+        timer: 1500,
+      });
+        
+      await updateDoc(docRef, { cartUser: [...cartUser, parseProductStorage] });
     }
-
-
-  }
-
-
+  };
 
   //useEffects Proximamente a comentar
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
       setUserAutentication(currentUser);
-      setLoading(false)
-      setUuidUser(currentUser.uid)
-
+      setLoading(false);
+      setUuidUser(currentUser.uid);
+      console.log(currentUser)
     });
   }, []);
 
   useEffect(() => {
     getAllProducts();
   }, []);
-
-
 
   return (
     <getContext.Provider

@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Nav from "../../components/1-Nav/Nav";
 import { BsBasket } from "react-icons/bs";
 import NavButtom from "../../components/4-NavButtom/NavButtom";
 import { useTheContext } from "../../context/contex";
+import { collection, doc, getDoc } from "firebase/firestore";
+import { db } from "../../firebase";
 
 const Img = styled.img`
   width: 100%;
@@ -96,8 +98,13 @@ button{
 const ViewProduct = () => {
   const productStorage = localStorage.getItem("alfareriaMsProduct");
   const parseProductStorage = JSON.parse(productStorage);
-  const { price, name, images, color, size, description, id } = parseProductStorage;
-  const {addProduct, uuidUser} = useTheContext()
+  const { price, name, images, color, size, description } = parseProductStorage;
+  const {addProduct, uuidUser} = useTheContext();
+
+
+
+
+
 
   return (
     <>
