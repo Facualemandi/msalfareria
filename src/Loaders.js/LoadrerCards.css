@@ -1,0 +1,25 @@
+
+.loader-two {
+    width: 95%;
+    height: 220px;
+    border-radius: 0px;
+    border: 1px solid rgba(49, 49, 49, 0.146);
+    border-radius: 10px;
+    background:
+        linear-gradient(0.25turn, transparent, #FFF, transparent),
+        linear-gradient(rgb(232, 232, 232), rgb(240, 240, 240)),
+        linear-gradient(rgb(240, 240, 240), rgb(240, 240, 240)),
+        linear-gradient(rgb(240, 240, 240), rgb(240, 240, 240));
+    background-color: #fff;
+    background-repeat: no-repeat;
+    background-size: 215px 220px, 215px 130px, 100px 15px, 150px 15px;
+    background-position: -215px 0, 0 0, 15px 150px, 15px 180px;
+    animation: loading 1.5s infinite;
+    margin-top: 15px;
+}
+
+@keyframes loading {
+  to {
+    background-position: 215px 0, 0 0, 15px 150px, 15px 180px;
+  }
+}

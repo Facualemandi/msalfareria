@@ -87,8 +87,6 @@ const NavL = styled(NavLink)`
    
 `
 
-
-
 const Start = () => {
    const {login, user, setUser} =  useTheContext();
    const navigate = useNavigate();

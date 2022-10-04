@@ -8,11 +8,12 @@ const Nav = styled.nav`
  position: fixed;
  bottom: 0px;
  height: auto;
- border: 1px solid rgba(0, 0, 0, 0.150);
+ border-top: 1px solid rgba(0, 0, 0, 0.150);
  width: 100%;
  padding: 7px;
  display: flex;
  justify-content: space-around;
+ background-color: white;
 `
 const Img = styled.img`
 width: 65px;
