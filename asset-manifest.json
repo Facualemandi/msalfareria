@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/msalfareria/static/css/main.0a1d9aea.css",
-    "main.js": "/msalfareria/static/js/main.153c66db.js",
+    "main.js": "/msalfareria/static/js/main.6226a676.js",
     "static/media/plato.png": "/msalfareria/static/media/plato.1bcaf7044ba9d6b66d37.png",
     "static/media/like.png": "/msalfareria/static/media/like.621c33795d13bb060c49.png",
     "static/media/jarra.png": "/msalfareria/static/media/jarra.57ad59762ee3846a83cc.png",
@@ -10,10 +10,10 @@
     "static/media/soup.png": "/msalfareria/static/media/soup.6f35b7ad807c498f16f5.png",
     "index.html": "/msalfareria/index.html",
     "main.0a1d9aea.css.map": "/msalfareria/static/css/main.0a1d9aea.css.map",
-    "main.153c66db.js.map": "/msalfareria/static/js/main.153c66db.js.map"
+    "main.6226a676.js.map": "/msalfareria/static/js/main.6226a676.js.map"
   },
   "entrypoints": [
     "static/css/main.0a1d9aea.css",
-    "static/js/main.153c66db.js"
+    "static/js/main.6226a676.js"
   ]
 }
