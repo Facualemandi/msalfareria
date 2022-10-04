@@ -27,7 +27,7 @@ export const useTheContext = () => {
 };
 
 export function ProviderContext({ children }) {
-  const [uuidUser, setUuidUser] = useState("");
+  const [uid, setUid] = useState('')
   const [products, setProducts] = useState([]);
   const [viewOneProduct, setViewOneProduct] = useState([]);
   const navigate = useNavigate();
@@ -38,13 +38,18 @@ export function ProviderContext({ children }) {
 
   // Obtenemos los datos de la collección 'AllProducts' y lo guardamos en products
   const dbCollectAllProducts = collection(db, "allProducts");
+  const userCart = collection(db, "users");
 
-  const getAllProducts = async () => {
+  const getAllProducts = async (uid) => {
     const data = await getDocs(dbCollectAllProducts);
-    console.log("Ejecutado de nuevo");
-    setProducts(
-      data.docs.map((product) => ({ ...product.data(), id: product.id }))
-    );
+    setProducts(data.docs.map((product) => ({ ...product.data(), id: product.id })));
+
+
+    const docCollect = doc(userCart, uid);
+    const getUserCart = await getDoc(docCollect);
+    console.log(getUserCart.data().cartUser)
+    setCartUser(getUserCart.data().cartUser)
+
   };
 
   //Creamos un State para manejar el Email y password del usuario
@@ -81,17 +86,17 @@ export function ProviderContext({ children }) {
 
   // Acá se ejecuta la funcion que obtenemos de register
   const addUserToCollect = async (email, uid) => {
-    const docRef = doc(db, "Users", uid);
+    const docRef = doc(db, "users", uid);
     const payload = { email, cartUser, productsLikes, uid };
     await setDoc(docRef, payload);
   };
 
   // Acá creamos una función para agregar productos al carrito del usuario
-  const addProduct = async (uuidUser, parseProductStorage) => {
-    const refCollect = collection(db, "Users");
-    const docRef = doc(refCollect, uuidUser);
+  const addProduct = async (uid, parseProductStorage) => {
+    const refCollect = collection(db, "users");
+    const docRef = doc(refCollect, uid);
 
-    const getOneDoc = doc(db, "Users", uuidUser);
+    const getOneDoc = doc(db, "users", uid);
     const oneDoc = await getDoc(getOneDoc);
 
     const cartUser = oneDoc.data().cartUser;
@@ -109,8 +114,8 @@ export function ProviderContext({ children }) {
         showConfirmButton: false,
         timer: 1500,
       });
-        
       await updateDoc(docRef, { cartUser: [...cartUser, parseProductStorage] });
+      await getAllProducts(uid)
     }
   };
 
@@ -119,14 +124,12 @@ export function ProviderContext({ children }) {
     onAuthStateChanged(auth, (currentUser) => {
       setUserAutentication(currentUser);
       setLoading(false);
-      setUuidUser(currentUser.uid);
-      console.log(currentUser)
+      setUid(currentUser.uid);
+      getAllProducts(currentUser.uid);
     });
   }, []);
 
-  useEffect(() => {
-    getAllProducts();
-  }, []);
+
 
   return (
     <getContext.Provider
@@ -142,7 +145,8 @@ export function ProviderContext({ children }) {
         getProduct,
         viewOneProduct,
         addProduct,
-        uuidUser,
+        uid,
+        cartUser,
       }}
     >
       {children}

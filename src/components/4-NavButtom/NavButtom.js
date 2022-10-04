@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Likes from "../../images/like.png";
 import User from "../../images/user.png";
 import Cart from "../../images/cart.png";
+import { useTheContext } from "../../context/contex";
 
 const Nav = styled.nav`
   position: fixed;
@@ -37,6 +38,7 @@ const SectionCart = styled.section`
 
 const NavButtom = () => {
   const [openCart, setOpenCart] = useState(false);
+  const {cartUser} = useTheContext();
 
   const openMenuCart = () => {
     if (!openCart) {
@@ -51,7 +53,10 @@ const NavButtom = () => {
       <Nav>
         <Img alt="" src={Likes} />
         <Img alt="" src={User} />
+        <div>
         <Img alt="" src={Cart} onClick={openMenuCart} />
+        <p>{cartUser.length}</p>
+        </div>
       </Nav>
 
       <SectionCart value={openCart}>

@@ -99,10 +99,11 @@ const ViewProduct = () => {
   const productStorage = localStorage.getItem("alfareriaMsProduct");
   const parseProductStorage = JSON.parse(productStorage);
   const { price, name, images, color, size, description } = parseProductStorage;
-  const {addProduct, uuidUser} = useTheContext();
+  const {addProduct, uid, cartUser} = useTheContext();
 
 
 
+  console.log(uid)
 
 
 
@@ -129,7 +130,7 @@ const ViewProduct = () => {
           </ButtosAddMinus>
 
 
-            <ButtonAddCart onClick={() => addProduct(uuidUser, parseProductStorage)}>
+            <ButtonAddCart onClick={() => addProduct(uid, parseProductStorage)}>
               <BsBasket />
               Agregr al carrito
               <hr />

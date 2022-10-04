@@ -42,7 +42,6 @@ color: black;
 `
 
 const Products = ({ products }) => {
-  console.log(products);
   const {getProduct} = useTheContext();
 
 
