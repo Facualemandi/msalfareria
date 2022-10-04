@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router-dom";
+import { ProtectRoute } from "./components/ProtectRoute/ProtectRoute";
 import { ProviderContext } from "./context/contex";
 import Start from "./pages/1-Start/Start";
 import Home from "./pages/2-Home/Home";
@@ -9,8 +10,8 @@ function App() {
     <ProviderContext>
       <Routes>
         <Route path="/" element={<Start />} />
-        <Route path="/register" element={<Register/>}/>
-        <Route path="/home" element={<Home/>} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/home" element={ <ProtectRoute> <Home /> </ProtectRoute> } />
       </Routes>
     </ProviderContext>
   );
