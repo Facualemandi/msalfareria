@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import Dark from "../../images/dark.png";
+import Likes from "../../images/like.png";
 import User from "../../images/user.png";
 import Cart from "../../images/cart.png";
 
@@ -25,7 +25,7 @@ border-radius: 15px;
 const NavButtom = () => {
   return (
     <Nav>
-        <Img alt='' src={Dark}/>
+        <Img alt='' src={Likes}/>
         <Img alt='' src={User}/>
         <Img alt='' src={Cart}/>
     </Nav>

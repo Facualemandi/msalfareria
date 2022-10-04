@@ -7,9 +7,9 @@ import {
 } from "firebase/auth";
 
 import { auth, db } from "../firebase";
-import { collection, doc, getDoc, getDocs, setDoc } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, setDoc, updateDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
-import { async } from "@firebase/util";
+import Swal from "sweetalert2";
 
 const getContext = createContext();
 
@@ -20,6 +20,7 @@ export const useTheContext = () => {
 };
 
 export function ProviderContext({ children }) {
+  const [uuidUser, setUuidUser] = useState('')
   const [products, setProducts] = useState([]);
   const [viewOneProduct, setViewOneProduct] = useState([])
   const navigate = useNavigate();
@@ -57,9 +58,7 @@ export function ProviderContext({ children }) {
     const saveUser = onAuthStateChanged(auth, async (currentUser) => {
          await addUserToCollect(currentUser.email, currentUser.uid);
     })
-
     saveUser();
-
   };
 
   //Funcion para cerrar sesion/LogOut del usuario
@@ -74,13 +73,40 @@ export function ProviderContext({ children }) {
 
   }
 
-
 // Acá se ejecuta la funcion que obtenemos de register
   const addUserToCollect = async (email, uid) => {
       const docRef = doc(db, "Users", uid);
       const payload = { email, cartUser,productsLikes, uid };
       await setDoc(docRef, payload);
   };
+
+  // Acá creamos una función para agregar productos al carrito del usuario
+  const addProduct = async (uuidUser, parseProductStorage) => {
+    const refCollect = collection(db, 'Users');
+    const docRef = doc(refCollect, uuidUser);
+
+    const getOneDoc = doc(db, 'Users', uuidUser);
+    const oneDoc = await getDoc(getOneDoc);
+
+    const cartUser = oneDoc.data().cartUser;
+    const findProductInCart = cartUser.find(obj => obj.id === parseProductStorage.id);
+
+    if(findProductInCart){
+      console.log('Ya existe')
+    }else{
+      Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: 'Producto agregado',
+        showConfirmButton: false,
+        timer: 1500
+      })
+      
+      await updateDoc(docRef, {cartUser: [...cartUser, parseProductStorage]})
+    }
+
+
+  }
 
 
 
@@ -89,6 +115,7 @@ export function ProviderContext({ children }) {
     onAuthStateChanged(auth, (currentUser) => {
       setUserAutentication(currentUser);
       setLoading(false)
+      setUuidUser(currentUser.uid)
 
     });
   }, []);
@@ -112,6 +139,8 @@ export function ProviderContext({ children }) {
         loading,
         getProduct,
         viewOneProduct,
+        addProduct,
+        uuidUser,
       }}
     >
       {children}

@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Nav from "../../components/1-Nav/Nav";
 import { BsBasket } from "react-icons/bs";
 import NavButtom from "../../components/4-NavButtom/NavButtom";
+import { useTheContext } from "../../context/contex";
 
 const Img = styled.img`
   width: 100%;
@@ -95,7 +96,8 @@ button{
 const ViewProduct = () => {
   const productStorage = localStorage.getItem("alfareriaMsProduct");
   const parseProductStorage = JSON.parse(productStorage);
-  const { price, name, images, color, size, description } = parseProductStorage;
+  const { price, name, images, color, size, description, id } = parseProductStorage;
+  const {addProduct, uuidUser} = useTheContext()
 
   return (
     <>
@@ -114,14 +116,13 @@ const ViewProduct = () => {
 
           <DivAddCart>
           <ButtosAddMinus>
-
             <button>-</button>
             <span>0</span>
             <button>+</button>
           </ButtosAddMinus>
 
 
-            <ButtonAddCart>
+            <ButtonAddCart onClick={() => addProduct(uuidUser, parseProductStorage)}>
               <BsBasket />
               Agregr al carrito
               <hr />
