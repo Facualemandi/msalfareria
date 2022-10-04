@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { FcGoogle } from 'react-icons/fc';
 import { useTheContext } from "../../context/contex";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import Loader1 from "../../Loaders.js/Loader1";
 
 const Main = styled.main`
@@ -83,6 +83,9 @@ const Errror = styled.p`
   color: rgb(198, 68, 68);
   margin-top: 3px;
 `
+const NavL = styled(NavLink)`
+   
+`
 
 
 
@@ -103,6 +106,7 @@ const Start = () => {
         setLoader(false);
 
      } catch (error) {
+      setLoader(false);
       let errors = {};
         console.log(error.code)
         if(error.code === 'auth/user-not-found'){
@@ -148,11 +152,10 @@ const enterUser = (e) => {
 
            {loader && <Loader1/>}
 
-           
         </Form>
         
         <NotAcc>
-          no tienes cuenta? <span>Registrarse</span>
+          no tienes cuenta? <NavL to={'/register'}>Registrarse</NavL>
         </NotAcc>
 
         <Buttons>Ingresar con Google <IconGoogle/> </Buttons>

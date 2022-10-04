@@ -20,12 +20,18 @@ export function ProviderContext({ children }) {
     password: "",
   });
 
+  //Función para Loguear/Ingresar a un usuario
   const login = async (email, password, user) => {
     await signInWithEmailAndPassword(auth, email, password, user);
   };
 
+  //Función para Registrar un usuario
+  const register = async (email, password) => {
+       await createUserWithEmailAndPassword(auth, email, password)
+  } 
+
   return (
-    <getContext.Provider value={{ user, setUser, login }}>
+    <getContext.Provider value={{ user, setUser, login, register }}>
       {children}
     </getContext.Provider>
   );
