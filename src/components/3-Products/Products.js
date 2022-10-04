@@ -9,6 +9,7 @@ const Container = styled.section`
   grid-template-columns: repeat(2, 1fr);
   width: 100%;
   padding: 15px;
+  margin-bottom: 100px;
 `;
 const ContainerProduct = styled.section`
   margin: 5px;

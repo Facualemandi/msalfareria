@@ -17,13 +17,13 @@ width: 100%;
 `
 
 const Ul = styled.ul`
-position: absolute;
+position: fixed;
 top: 0px;
 width: 50%;
 z-index: 1500;
 transform: ${({value}) => !value ? 'translateX(-101%)' : 'translateX(0%)'};
 transition: 0.5s;
-min-height: 90vh;
+min-height: 100vh;
 background-color: white;
 box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.163);
 `

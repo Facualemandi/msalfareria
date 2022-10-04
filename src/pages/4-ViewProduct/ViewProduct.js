@@ -41,7 +41,7 @@ const ButtonAddCart = styled.button`
   display: flex;
   justify-content: space-around;
   align-items: center;
-  font-size: 24px;
+  font-size: 20px;
 
   &&:active {
     background: rgb(52, 139, 236);
@@ -55,7 +55,11 @@ const ButtonAddCart = styled.button`
   hr {
     height: 30px;
   }
-  background-color: red;
+
+  p{
+    margin-top: 0px;
+  }
+
 `;
 
 const Container = styled.section`
@@ -65,6 +69,28 @@ const Container = styled.section`
   color: black;
   margin-bottom: 100px;
 `;
+
+const ButtosAddMinus = styled.div`
+display: flex;
+justify-content: center;
+align-items: center;
+background-color: #ecdccc;
+border-radius: 10px;
+margin-bottom: 15px;
+box-shadow: 5px 5px 5px 0 rgba(0, 0, 0, 0.20);
+span{
+    font-size: 30px;
+}
+
+button{
+    padding: 20px;
+    width: 100%;
+    background-color: #ecdccc;
+    border: none;
+    border-radius: 10px;
+    font-size: 18px;
+}
+`
 
 const ViewProduct = () => {
   const productStorage = localStorage.getItem("alfareriaMsProduct");
@@ -84,7 +110,17 @@ const ViewProduct = () => {
           <p>Color: <span> {color}</span> </p>
           <p>Tamaño: <span>{size}</span></p>
 
+
+
           <DivAddCart>
+          <ButtosAddMinus>
+
+            <button>-</button>
+            <span>0</span>
+            <button>+</button>
+          </ButtosAddMinus>
+
+
             <ButtonAddCart>
               <BsBasket />
               Agregr al carrito
