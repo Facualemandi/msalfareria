@@ -104,7 +104,7 @@ const Register = () => {
         />
         <Errors>{error.weakPassword}</Errors>
 
-        <input type={"submit"} value="Ingresar" />
+        <input type={"submit"} value="Registrarse" />
 
         {loader && <Loader1 />}
       </Form>

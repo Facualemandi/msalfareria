@@ -7,8 +7,9 @@ import {
 } from "firebase/auth";
 
 import { auth, db } from "../firebase";
-import { collection, doc, getDoc, getDocs } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, setDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
+import { async } from "@firebase/util";
 
 const getContext = createContext();
 
@@ -23,7 +24,9 @@ export function ProviderContext({ children }) {
   const [viewOneProduct, setViewOneProduct] = useState([])
   const navigate = useNavigate();
   const [userAutentication, setUserAutentication] = useState(null);
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
+  const [cartUser, setCartUser] = useState([]);
+  const [productsLikes, setProductsLikes] = useState([])
 
   // Obtenemos los datos de la collección 'AllProducts' y lo guardamos en products
   const dbCollectAllProducts = collection(db, "allProducts");
@@ -47,9 +50,16 @@ export function ProviderContext({ children }) {
     await signInWithEmailAndPassword(auth, email, password, user);
   };
 
-  //Función para Registrar un usuario
+  //Función para Registrar un usuario y agregarlo a la coleccoón de User
   const register = async (email, password) => {
     await createUserWithEmailAndPassword(auth, email, password);
+
+    const saveUser = onAuthStateChanged(auth, async (currentUser) => {
+         await addUserToCollect(currentUser.email, currentUser.uid);
+    })
+
+    saveUser();
+
   };
 
   //Funcion para cerrar sesion/LogOut del usuario
@@ -64,12 +74,22 @@ export function ProviderContext({ children }) {
 
   }
 
+
+// Acá se ejecuta la funcion que obtenemos de register
+  const addUserToCollect = async (email, uid) => {
+      const docRef = doc(db, "Users", uid);
+      const payload = { email, cartUser,productsLikes, uid };
+      await setDoc(docRef, payload);
+  };
+
+
+
   //useEffects Proximamente a comentar
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
       setUserAutentication(currentUser);
       setLoading(false)
-      console.log(currentUser);
+
     });
   }, []);
 
