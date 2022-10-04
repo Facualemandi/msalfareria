@@ -11,13 +11,16 @@ z-index: 1000;
 right: 0px;
 padding: 5px;
 padding-right: 20px;
+position: fixed;
+background-color: white;
+width: 100%;
 `
 
 const Ul = styled.ul`
 position: absolute;
 top: 0px;
 width: 50%;
-z-index: 500;
+z-index: 1500;
 transform: ${({value}) => !value ? 'translateX(-101%)' : 'translateX(0%)'};
 transition: 0.5s;
 min-height: 90vh;

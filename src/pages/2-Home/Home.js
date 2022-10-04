@@ -14,10 +14,6 @@ const Home = () => {
    const {products} = useTheContext();
 
 
-
-
-
-
   return ( 
     <main>
        <Nav/>

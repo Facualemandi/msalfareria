@@ -7,7 +7,7 @@ import {
 } from "firebase/auth";
 
 import { auth, db } from "../firebase";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 
 const getContext = createContext();
@@ -20,6 +20,7 @@ export const useTheContext = () => {
 
 export function ProviderContext({ children }) {
   const [products, setProducts] = useState([]);
+  const [viewOneProduct, setViewOneProduct] = useState([])
   const navigate = useNavigate();
   const [userAutentication, setUserAutentication] = useState(null);
   const [loading, setLoading] = useState(true)
@@ -57,6 +58,12 @@ export function ProviderContext({ children }) {
     navigate("/");
   };
 
+  //Obtenemos un producto solo para mostar en ViewProduct -- (Revisar)
+  const getProduct = async (product) => {
+     localStorage.setItem('alfareriaMsProduct' , JSON.stringify(product))
+
+  }
+
   //useEffects Proximamente a comentar
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
@@ -83,6 +90,8 @@ export function ProviderContext({ children }) {
         logAuth,
         userAutentication,
         loading,
+        getProduct,
+        viewOneProduct,
       }}
     >
       {children}
