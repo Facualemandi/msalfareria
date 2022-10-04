@@ -10,6 +10,7 @@ justify-content: flex-end;
 z-index: 1000;
 right: 0px;
 padding: 5px;
+padding-right: 20px;
 `
 
 const Ul = styled.ul`
@@ -26,13 +27,13 @@ box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.163);
 
 
 const Nav = () => {
-    const {products, logAuth} = useTheContext();
+    const {logAuth} = useTheContext();
     const [isOpen, setOpen] = useState(false);
     
   return (
     <>
       <DivHamburger>
-        <Hamburger toggled={isOpen} toggle={setOpen} />
+        <Hamburger toggled={isOpen} toggle={setOpen} size={40}/>
       </DivHamburger>
 
       <Ul value={isOpen}>
